@@ -59,6 +59,7 @@
 //104
 		1058C7A0FEA54F0111CA2CBB = {
 			children = (
+				976666A8030AE77C00818A17,
 				1058C7A1FEA54F0111CA2CBB,
 			);
 			isa = PBXGroup;
@@ -118,6 +119,7 @@
 				978ACEB70305EE060031317E,
 				97C2B12703071CA600EA1B76,
 				97C2B1310307C82600EA1B76,
+				9766669E030AE19900818A17,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -148,6 +150,7 @@
 				97C2B12803071CA600EA1B76,
 				97C2B1320307C82600EA1B76,
 				97666697030A76C100818A17,
+				9766669F030AE19900818A17,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
@@ -175,6 +178,8 @@
 				978ACEBD0305EE2C0031317E,
 				97C2B12603071CA600EA1B76,
 				97C2B1380307C84800EA1B76,
+				9766669D030AE16B00818A17,
+				976666A5030AE21000818A17,
 			);
 			isa = PBXGroup;
 			name = "Other Sources";
@@ -442,6 +447,102 @@
 		9766669C030A76C100818A17 = {
 			isa = PBXTargetDependency;
 			target = 29B97326FDCFA39411CA2CEA;
+		};
+		9766669D030AE16B00818A17 = {
+			isa = PBXFileReference;
+			path = jgSendEvent.c;
+			refType = 4;
+		};
+		9766669E030AE19900818A17 = {
+			isa = PBXExecutableFileReference;
+			path = jgsendeval;
+			refType = 3;
+		};
+		9766669F030AE19900818A17 = {
+			buildPhases = (
+				976666A0030AE19900818A17,
+				976666A1030AE19900818A17,
+				976666A2030AE19900818A17,
+				976666A3030AE19900818A17,
+			);
+			buildSettings = {
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = jgsendeval;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+			);
+			isa = PBXToolTarget;
+			name = jgsendeval;
+			productInstallPath = /usr/local/bin;
+			productName = jgsendeval;
+			productReference = 9766669E030AE19900818A17;
+			shouldUseHeadermap = 0;
+		};
+		976666A0030AE19900818A17 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		976666A1030AE19900818A17 = {
+			buildActionMask = 2147483647;
+			files = (
+				976666A6030AE21000818A17,
+				976666A7030AE21000818A17,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		976666A2030AE19900818A17 = {
+			buildActionMask = 2147483647;
+			files = (
+				976666A9030AE77C00818A17,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		976666A3030AE19900818A17 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		976666A5030AE21000818A17 = {
+			isa = PBXFileReference;
+			path = jgsendevent_main.m;
+			refType = 4;
+		};
+		976666A6030AE21000818A17 = {
+			fileRef = 976666A5030AE21000818A17;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		976666A7030AE21000818A17 = {
+			fileRef = 9766669D030AE16B00818A17;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		976666A8030AE77C00818A17 = {
+			isa = PBXFrameworkReference;
+			name = Carbon.framework;
+			path = /System/Library/Frameworks/Carbon.framework;
+			refType = 0;
+		};
+		976666A9030AE77C00818A17 = {
+			fileRef = 976666A8030AE77C00818A17;
+			isa = PBXBuildFile;
+			settings = {
+			};
 		};
 		978ACEB70305EE060031317E = {
 			isa = PBXExecutableFileReference;

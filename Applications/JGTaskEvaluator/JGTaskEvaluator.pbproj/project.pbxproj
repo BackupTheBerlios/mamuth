@@ -147,6 +147,7 @@
 				978ACEB80305EE060031317E,
 				97C2B12803071CA600EA1B76,
 				97C2B1320307C82600EA1B76,
+				97666697030A76C100818A17,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
@@ -398,6 +399,50 @@
 //972
 //973
 //974
+		97666697030A76C100818A17 = {
+			buildPhases = (
+			);
+			buildSettings = {
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = All;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+				97666698030A76C100818A17,
+				97666699030A76C100818A17,
+				9766669A030A76C100818A17,
+				9766669B030A76C100818A17,
+				9766669C030A76C100818A17,
+			);
+			isa = PBXAggregateTarget;
+			name = All;
+			productName = All;
+			shouldUseHeadermap = 0;
+		};
+		97666698030A76C100818A17 = {
+			isa = PBXTargetDependency;
+			target = 97C2B1320307C82600EA1B76;
+		};
+		97666699030A76C100818A17 = {
+			isa = PBXTargetDependency;
+			target = 97C2B12803071CA600EA1B76;
+		};
+		9766669A030A76C100818A17 = {
+			isa = PBXTargetDependency;
+			target = 978ACEB80305EE060031317E;
+		};
+		9766669B030A76C100818A17 = {
+			isa = PBXTargetDependency;
+			target = 97D073AA03041D0900951B37;
+		};
+		9766669C030A76C100818A17 = {
+			isa = PBXTargetDependency;
+			target = 29B97326FDCFA39411CA2CEA;
+		};
 		978ACEB70305EE060031317E = {
 			isa = PBXExecutableFileReference;
 			path = jgdofifo;
@@ -498,7 +543,6 @@
 				97C2B12D03071CA600EA1B76,
 			);
 			buildSettings = {
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -571,7 +615,6 @@
 				97C2B1360307C82600EA1B76,
 			);
 			buildSettings = {
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";

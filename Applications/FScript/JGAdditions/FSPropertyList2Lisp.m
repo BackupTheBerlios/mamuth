@@ -138,6 +138,8 @@ static NSString *globalNewLine=nil;
   vectorString=[@"list" retain];
   if (globalNewLine)
     newLine=[globalNewLine copy];
+  else
+    newLine=[@"\n" retain];
   return self;
 }
 

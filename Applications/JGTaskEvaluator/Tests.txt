@@ -37,3 +37,31 @@ end tell
 EOF
 
 
+# Testing jgdo
+./jgdo F-Script execute all <<\EOF
+3+4.
+8.
+('a' stringByAppendingString:'b')
+EOF
+
+./jgdo F-Script execute <<\EOF
+3+4
+8
+('a' stringByAppendingString:'b')
+EOF
+
+./jgdo F-Script execute lineByLine <<\EOF
+3+4
+8
+('a' stringByAppendingString:'b')
+EOF
+
+./jgdo F-Script executeText all <<\EOF
+
+3+4
+8
+('a' stringByAppendingString:'b')
+EOF
+
+./jgdo F-Script execute direct "3+4"
+

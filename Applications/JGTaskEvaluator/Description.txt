@@ -28,6 +28,11 @@ USAGE: jgdoscript stopName [-n]
 jgrunwithfifo.sh is a script that allows to pipe stdin to a command, that only accepts input from a file. Works for commands that do read from start till end-of-file only once.
 USAGE: jgrunwithfifo command [fifofilename [arg2 ... ]]
 
+jgcmdserver.sh and jgcmdclient.sh interact on the basis of a directory, which maps the execution status of a command. jgcmdclient writes its input and command line arguments, notifies the server, which starts execution and signales its termination back to the client.
+This is useful in cases, where the server has more execution rights than the client. The server process might run under a different user id. In the case of Mac OS X I needed this pair of tools, because from a remote shell - as opposed to a normal shell - I could not send Appleevents or Distributed Objects calls, e.g. with jgae or jgdo even as the same user. (I do not know why!) So now, I start the server in a normal shell and execute critical commands from the remote shell with jgcmdclient.
+This command is also interesting, if You want to log the command execution.
+Warning: This is a security hole. Make sure, that You set file permissions correctly, so noone but You can write to the SERVER_NOTIFICATION_FILE. And do not allow everybody root access :-)
+
 Special application targets
 ===========================
 jgom is a specialization of jgae for the case of communication with OpenMusic.

@@ -136,5 +136,7 @@ ps -ax | grep jgdo | grep -v grep | gawk 'BEGIN {FS=" "}{system("kill "$1)}'
 sleep 2
 ./jgom direct "'b"
 
-
-
+# Start the server 
+sh /Volumes/jg/jg/Entwicklung/berlios/Applications/JGTaskEvaluator/jgcmdserver.sh
+# Run a client (multiple times!)
+sh /Volumes/jg/jg/Entwicklung/berlios/Applications/JGTaskEvaluator/jgcmdclient.sh jgdo Rubato execute direct "5+2" </dev/null

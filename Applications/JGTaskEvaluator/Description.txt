@@ -32,6 +32,8 @@ jgcmdserver.sh and jgcmdclient.sh interact on the basis of a directory, which ma
 This is useful in cases, where the server has more execution rights than the client. The server process might run under a different user id. In the case of Mac OS X I needed this pair of tools, because from a remote shell - as opposed to a normal shell - I could not send Appleevents or Distributed Objects calls, e.g. with jgae or jgdo even as the same user. (I do not know why!) So now, I start the server in a normal shell and execute critical commands from the remote shell with jgcmdclient.
 This command is also interesting, if You want to log the command execution.
 Warning: This is a security hole. Make sure, that You set file permissions correctly, so noone but You can write to the SERVER_NOTIFICATION_FILE. And do not allow everybody root access :-)
+Typical Problems (especially from OpenMusic): every command given to jgcmdclient must be paired with stdin, even, if it does not consume it. So use </dev/null.
+Known bugs: jgcmdserver sometimes reads empty lines. Even more strange behaviour with bash. (see code)
 
 Special application targets
 ===========================

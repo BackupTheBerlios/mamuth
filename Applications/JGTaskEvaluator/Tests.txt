@@ -1,0 +1,39 @@
+# Testing osascript
+# select /usr/bin/osascript and input:
+tell application "Finder"
+  activate
+end tell
+
+# Testing special handling of #!:
+# Warning: the handling of #! is not fully compatible with the shell usage.
+# Here the line might not contain any other whitespace, arguments or options.
+# The line is removed from input. That allows to use it with #!/usr/bin/osascript
+
+# Select any command
+# Select Checkmark
+# In input:
+#!/bin/bash
+echo hi
+ls
+echo there
+
+# Should not work in shell scripts, because applescript does not understand #!
+# But due to special semantics of #! this works (see outputOfProgramWithInput:)
+# select anything,
+# Ininput:
+#!/usr/bin/osascript
+tell application "Finder"
+  activate
+end tell
+
+
+# Testing if JGTaskEvaluator responds to Apple Event "eval"
+# select a shell 
+# In Terminal.app enter, or from OpenMusic send with (send-eval input "JGTaskEvaluator")
+osascript <<EOF
+tell application "JGTaskEvaluator"
+  eval "ls -l"
+end tell
+EOF
+
+

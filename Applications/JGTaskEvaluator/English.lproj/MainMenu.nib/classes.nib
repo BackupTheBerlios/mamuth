@@ -1,0 +1,21 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {executeInputTextView = id; }; 
+            CLASS = JGTaskServicesProvider; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                commandComboBox = NSComboBox; 
+                echoServicesAndEventsInputSwitch = NSWindow; 
+                echoServicesAndEventsOutputSwitch = NSButton; 
+                inputTextView = NSTextView; 
+                outputTextView = NSTextView; 
+                useCommandInInputCommentSwitch = NSButton; 
+                window = NSWindow; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}

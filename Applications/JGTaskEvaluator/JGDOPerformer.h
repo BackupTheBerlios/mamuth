@@ -2,34 +2,20 @@
 //  This software is open source. See the license.
 
 #import <Foundation/Foundation.h>
+#import "JGIOPerformer.h"
 
 
-
-@interface JGDOPerformer : NSObject
+@interface JGDOPerformer : JGIOPerformer
 {
   NSString *serverName;
   NSString *hostName;
-  SEL serverSelector,clientSelector; // jgdoPerformer is the client, the foreign process server object is the server.
-
-  NSFileHandle *input,*output;
+  SEL serverSelector; // jgdoPerformer is the client, the foreign process server object is the server.
   id server;
-  NSString *inputFromCommandLine;
 }
 - (NSString *)usage;
 - (void)setWithProcessInfo;
 
+// overridden
 - (void)perform;
-// valid clientSelectors
-- (void)all;
-- (void)lineByLine;
-- (void)lineByLineWithNewline; // good for interactive mode
-- (void)direct;
-
-// helpers
-- (void)lineByLineWithTerminator:(NSString *)terminator;
-
-- (void)writeOutputString:(NSString *)outputString;
-- (void)writeOutputStringForInputString:(NSString *)inputString;
-- (void)closeStreams;
-
+- (NSString *)outputStringForInputString:(NSString *)inputStr;
 @end

@@ -1,16 +1,10 @@
-/*
- *  sendEvent.c
- *  sendEvent
- *
- *  Created by Joerg Garbers on Wed Aug 14 2002.
- *  Copyright (c) 2001 __MyCompanyName__. All rights reserved.
- *
- */
+//  jgSendEvent.c Copyright (c) 2002 Joerg Garbers.
+//  This software is open source. See the license.
 
 #include <Carbon/Carbon.h>
 
 
-char *sendString(OSType creator, AEEventClass theAEEventClass, AEEventID theAEEventID, const char *text) {
+char *sendString(OSType creator, AEEventClass theAEEventClass, AEEventID theAEEventID, const char *text, Size *returnStringSize) {
   
   AEAddressDesc target;
   AppleEvent theAppleEvent;
@@ -88,8 +82,11 @@ char *sendString(OSType creator, AEEventClass theAEEventClass, AEEventID theAEEv
     if (err==noErr) {
       dataPtr=malloc(maximumSize);
       err = AEGetParamPtr(&reply, theAEKeyword, desiredType, &typeCode, dataPtr, maximumSize, &actualSize);
-      if (err==noErr && (desiredType==typeCode))
+      if (err==noErr && (desiredType==typeCode)) {
         resultString=dataPtr;
+        if (returnStringSize)
+          *returnStringSize=actualSize;
+      }
     }    
   }
   AEDisposeDesc(&target);

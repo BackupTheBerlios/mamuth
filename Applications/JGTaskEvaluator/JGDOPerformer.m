@@ -8,11 +8,11 @@
 - (id)init;
 {
   [super init];
-  hostName=inputFromCommandLine=nil;
+  hostName=nil;
   
   serverName=[@"F-Script" retain];
   serverSelector=@selector(execute:);
-  clientSelector=@selector(lineByLineWithNewline);
+  errorFormatter=[@"jgdo error:%@" retain];
   return self;
 }
 - (void)dealloc;
@@ -35,16 +35,6 @@ USAGE: jgdo [DO-Server-Name [Serve-Method [Slice-Method [Direct-Parameter]]]]\n\
 ";
 }
 
-- (void)error:(NSString *)message;
-{
-  NSData *outputData;
-  NSFileHandle *err=[NSFileHandle fileHandleWithStandardError];
-  message=[@"jgdo error: " stringByAppendingString:message];
-  outputData=[message dataUsingEncoding:NSISOLatin1StringEncoding];
-  [err writeData:outputData];
-  exit(0);  
-}
-
 - (void)setWithProcessInfo;
 {
   NSProcessInfo *processInfo=[NSProcessInfo processInfo];
@@ -58,10 +48,6 @@ USAGE: jgdo [DO-Server-Name [Serve-Method [Slice-Method [Direct-Parameter]]]]\n\
   int clientSelectorPos=2;
   int inputFromCommandLinePos=3;
 
-  input=[[NSFileHandle fileHandleWithStandardInput] retain];
-  output=[[NSFileHandle fileHandleWithStandardOutput] retain];
-
-  // to be replaced by meaningfull
   if (argc>firstArg+serverNamePos) {
     NSString *serverNameString=[args objectAtIndex:firstArg+serverNamePos];
     NSArray *components=[serverNameString componentsSeparatedByString:@"@"];
@@ -109,61 +95,10 @@ USAGE: jgdo [DO-Server-Name [Serve-Method [Slice-Method [Direct-Parameter]]]]\n\
   [self performSelector:clientSelector];
 }
 
-- (void)all;
+- (NSString *)outputStringForInputString:(NSString *)inputStr;
 {
-  NSData *inputData=[input readDataToEndOfFile];
-  NSString *inputString=[[NSString alloc] initWithData:inputData encoding:NSISOLatin1StringEncoding];
-  [self writeOutputStringForInputString:inputString];
-}
-
-- (void)lineByLineWithTerminator:(NSString *)terminator;
-{
-  char *result;
-  size_t length;
-  int inpDesc=[input fileDescriptor];
-  FILE *inpFile=fdopen(inpDesc,"r");
-  while (result=fgetln(inpFile,&length)) {
-    if (length>0) {
-      NSString *inputString=[NSString stringWithCString:result length:length];
-      [self writeOutputStringForInputString:inputString];
-      if (terminator) {
-        [self writeOutputString:terminator];        
-      }
-    }
-  }
-}
-
-- (void)lineByLine;
-{
-  [self lineByLineWithTerminator:nil];
-}
-- (void)lineByLineWithNewline;
-{
-  [self lineByLineWithTerminator:@"\n"];
-}
-
-- (void)direct;
-{
-  if (!inputFromCommandLine)
-    [self error:@"direct parameter missing"];
-  [self writeOutputStringForInputString:inputFromCommandLine];
-}
-
-- (void)closeStreams;
-{
-  [input closeFile];
-  [output closeFile];
-}
-
-- (void)writeOutputString:(NSString *)outputString;
-{
-  NSData *outputData=[outputString dataUsingEncoding:NSISOLatin1StringEncoding];
-  [output writeData:outputData];
-}
-- (void)writeOutputStringForInputString:(NSString *)inputString;
-{
-  NSString *outputString=[server performSelector:serverSelector withObject:inputString];
-  [self writeOutputString:outputString];
+  NSString *outputString=[server performSelector:serverSelector withObject:inputStr];
+  return outputString;
 }
 
 @end

@@ -127,4 +127,7 @@ line3
 # find all the jgdo* processes and kill them
 ps -ax | grep jgdo | grep -v grep | gawk 'BEGIN {FS=" "}{system("kill "$1)}'
 
+./jgae "CCL2" "misc" "eval" direct "(list 'a 'b)"
+./jgom direct "(list 'a 'b)"
+
 

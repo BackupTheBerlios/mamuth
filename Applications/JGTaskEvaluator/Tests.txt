@@ -70,3 +70,61 @@ EOF
 ls /tmp
 EOF
 
+mkfifo /tmp/jgdofifo.in
+mkfifo /tmp/jgdofifo.out
+./jgdofifo "jgdofifo" /tmp/jgdofifo.in /tmp/jgdofifo.out &
+./jgdo "jgdofifo" execute direct "script"
+# in other shell:
+cat /tmp/jgdofifo.in
+cat >>/tmp/jgfifo.out <<EOF
+result
+EOF
+
+# this works nearly. it just does not store the INP value that should be read.
+# why? (answer is not important for this test case)
+EXECUTABLE=/tmp/jgdoscript.sh
+cat >$EXECUTABLE <<EOF
+#!/bin/bash
+while test "x"=="x"; do
+read INP;
+date;
+echo $INP;
+echo "STOPWORD";
+done
+EOF
+chmod u+x $EXECUTABLE
+$EXECUTABLE
+./jgdostdio "stopwordserver" "$EXECUTABLE" "STOPWORD" 
+./jgdo "stopwordserver" execute 
+
+# this demonstrates the combination of stdin and other parameters in jgrunwithfifo
+sh jgrunwithfifo.sh cat `jgmktemp` /etc/hosts <<EOF
+bla
+blu
+EOF
+
+SERVER=`jgdoscript ...` does not work
+
+# ok:
+jgdoscript STOP <<\EOF &
+#!/bin/sh
+read LINE
+echo "request 1"
+echo "line: $LINE"
+echo "STOP"
+read LINE
+echo "request 2"
+echo "line: $LINE"
+echo "STOP"
+EOF
+
+# line3 correctly results in error, because task is not running anymore.
+jgdo /tmp/mktemp.* execute lineByLine
+line1
+line2
+line3
+
+# find all the jgdo* processes and kill them
+ps -ax | grep jgdo | grep -v grep | gawk 'BEGIN {FS=" "}{system("kill "$1)}'
+
+

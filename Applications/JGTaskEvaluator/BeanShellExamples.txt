@@ -1,0 +1,88 @@
+// from the BeanShell documentation (standalone scripts)
+cat >/tmp/jgscript.sh <<\EOF
+#!/bin/sh
+#! The following hack allows java to reside anywhere in the PATH.
+//bin/sh -c "exec java -cp bsh-1.2b6.jar bsh.Interpreter $0 $*"; exit
+print("foo");
+print("bar");
+EOF
+chmod u+x /tmp/jgscript.sh
+/tmp/jgscript.sh
+
+// bshstdio: A script that allows to pipe input trough beanshell from 
+// stdin without getting bsh prompt.
+// You can use this for example in:
+
+bshstdio <<EOF >/tmp/out
+print("a");
+x=3+4;
+print("b");
+print(x);
+EOF
+
+// jgdostdio maintains a connection to bsh.
+// so successive calls by jgdo refer to the changing state of the same bsh.
+jgdostdio "bshserver" ~/bin/bshstdio STOP
+jgdo "bshserver" execute all <<E\OF
+i=0;
+print(i);
+print("STOP");
+EOF
+jgdo "bshserver" execute all <<E\OF
+i++;
+print(i);
+print("STOP");
+EOF
+
+///////////////
+// PRAGMATICS:
+///////////////
+
+// If exceptions can occour, one should consider to shield the 
+// commands with a try block.
+// Useful commands:
+desktop(); // run desktop
+// if stdin is closed, desktop will still run, so bsh is not terminated.
+show(); //toggle on/off output of command results (if not void)
+exec(); // ? 
+run(); // script with new interpreter
+bg();
+eval(); // string or fileReader instance
+reader = new FileReader("myscript.bsh");
+i.eval( reader );
+
+// it could be useful to redirect all output to /dev/null
+/Library/Java/home/bin/java -Doutfile="/tmp/stdout" -cp bsh-1.2b6.jar  bsh.Interpreter ~/bsh_fifo
+// from the description, it should be a difference between
+print("b"); // and
+System.out.println("b");
+// but I tested it and both is output to the file.
+
+
+There are three methods to get input to the beanshell:
+1. Push: beanshell is started with inputfile (FIFO), from where the commands are read. Output to stdout.
+1.a: use a Simple Line by line protocol (works only correctly, if there is no output from within the script.)
+     run("InputFilePath"); print("done"); 
+1.b: use jgdoscript and produce STOP-words in each request.
+jgdoscript STOP <<E\OF
+#!\bin\sh
+TMP_NAME=`jgmktemp`
+jgrunwithfifo bsh $TMP_NAME
+# cleanup
+rm $TMP_NAME
+EOF
+It should be noted, that there might be some rubbish on the output of bsh.
+     
+2. Pull: make within beanshell a read-eval-print loop (for example in a bsh console window):
+exec("mkfifo input_fifo_name; mkfifo output_fifo_name");
+exec("jgdofifo server_name input_fifo_name output_fifo_name &");
+while (1) {
+  result=source("input_fifo_name");
+  file.print(output_fifo_name,result); // jg: replace with right call.
+} 
+
+An OC-Task with a named DO-server is started. Accociated with this is an input-fifo and an output-fifo. The beanshell server is set up to wait for input on input_fifo. When the OC-Task gets a request (a bean-script), it writes the script to input-fifo, closes the input and sets itself up to read from output-fifo. beanshell in response reads the input (until eof), evaluates it and prints the result to output-fifo (and closes that stream). The OC-Task now reads until eof from output-fifo and sends the result back as a string (either to apple-event, or to DO-caller).
+
+3. A combination:
+1.b is used to hold an initial connection and to connect beanshell from outside. An outside process on this line sets up a private server within beanshell (with a private protocoll) by sending the commands in 2, maybe launching another thread in bsh. Afterwords it talks over the private line. This is somehow what TCP/IP socket deamons do.
+

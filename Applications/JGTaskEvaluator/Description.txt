@@ -1,0 +1,11 @@
+JGTaskEvaluator is an Application, that has three communication channels: Services, Distributed-Objects (DO) and Apple-Event "eval". It logs the input, pipes it through a unix program (NSTask), reads the result until EOF and returns it back on the communication channel.
+
+jgdo is a unix program, that sends its standard input(s) to a named method of a named DO-server, and returns the result(s) to its standard output.
+So jgdo is useful as a target of JGTaskEvaluator, because this way Classic Mac programs can communicate per Apple-Events with Cocoa programs, that do not support apple events, but do support DO.
+
+jgdofifo is a unix program, that sets up a named DO-server (method "execute:"), puts each request string to a named first-in-first-out (FIFO) file (closes the stream) and polls another FIFO file until end of file, which must be indicated by another program, which reads from the first file and writes to the second.
+So jgdofifo is useful as a target of jgdo, because this way programs, that do not support any of the above communication channels, can be integrated into the communication architecture.
+
+jgdostdio is like jgdofifo a unix program, that sets up a named DO-server (method "execute:"), but instead of communicating with an independent task, it starts the task and controls its input and output. And opposed to JGTaskEvaluator, it does not wait until the task terminates, but until a stopword occurs on its stdout stream. The return value is the output without the stopword. It is the responsibility of the caller, that each request produces exactly one stopword and no output is produced after the stopword. The latter would lead to litter in the next request. The same is true, if the task is interactive and produces for some reasons output on stdout. If You want to be more safe, send a cleanup request, that just collects all current output data.
+jgdostdio is a replacement for jgdofifo for simple stdio based server tasks.
+

@@ -1,10 +1,5 @@
-//
-//  main.m
-//  JGTaskEvaluator
-//
-//  Created by Joerg Garbers on Mon Jul 15 2002.
-//  Copyright (c) 2001 __MyCompanyName__. All rights reserved.
-//
+//  jgdo_main.m Copyright (c) 2002 Joerg Garbers.
+//  This software is open source. See the license.
 
 #import <Cocoa/Cocoa.h>
 

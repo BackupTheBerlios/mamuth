@@ -1,4 +1,4 @@
-//  FSEvalScriptCommand.m Copyright (c) 2002 Joerg Garbers.
+//  JGEvalCommand.m Copyright (c) 2002 Joerg Garbers.
 //  This software is open source. See the license.
 
 #import "JGEvalCommand.h"

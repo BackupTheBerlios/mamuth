@@ -1,4 +1,6 @@
 #!/bin/sh
+# This is probably obsolete, because in bash there is the <(command) and >(command) notation
+#
 # A script that allows to pipe stdin to a command, that only accepts input from a file.
 # Works for commands that do read from start till end-of-file only once.
 USAGE="jgrunwithfifo command [fifofilename [arg2 ... ]]"

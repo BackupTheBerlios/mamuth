@@ -2,9 +2,9 @@
 {
 	29B97313FDCFA39411CA2CEA = {
 		activeBuildStyle = 4A9504CCFFE6A4B311CA0CBA;
-		activeTarget = 97D073AA03041D0900951B37;
+		activeTarget = 97C2B12803071CA600EA1B76;
 		addToTargets = (
-			97D073AA03041D0900951B37,
+			97C2B1320307C82600EA1B76,
 		);
 		breakpoints = (
 			97A4AE4102E361CD00951B37,
@@ -15,6 +15,13 @@
 			9789E3C602F5FA14008D7BCB,
 			9789E3C702F5FBA2008D7BCB,
 			978ACEB6030030F20031317E,
+			978ACEC30305FBF00031317E,
+			978ACEC40305FC730031317E,
+			978ACEC50306005A0031317E,
+			97746647030605850026ABAF,
+			9774664803060A850026ABAF,
+			97C2B130030732EA00EA1B76,
+			97C2B13A0307D21C00EA1B76,
 		);
 		perUserDictionary = {
 			PBXWorkspaceConfiguration = {
@@ -23,23 +30,23 @@
 					ActiveTab = 0;
 					Frame = "{{0, 23}, {966, 606}}";
 					Split0 = {
-						ActiveTab = 1;
-						Frame = "{{270, 0}, {696, 606}}";
+						ActiveTab = 2;
+						Frame = "{{297, 0}, {669, 606}}";
 						Split0 = {
-							Frame = "{{0, 232}, {696, 374}}";
+							Frame = "{{0, 216}, {669, 390}}";
 						};
 						SplitCount = 1;
 						Tab0 = {
 							Debugger = {
 								ActiveTab = 1;
-								Frame = "{{0, 0}, {696, 235}}";
+								Frame = "{{0, 0}, {742, 235}}";
 								Split0 = {
-									Frame = "{{0, 96}, {696, 139}}";
+									Frame = "{{0, 96}, {742, 139}}";
 									Split0 = {
-										Frame = "{{0, 0}, {337, 139}}";
+										Frame = "{{0, 0}, {357, 139}}";
 									};
 									Split1 = {
-										Frame = "{{346, 0}, {350, 139}}";
+										Frame = "{{366, 0}, {376, 139}}";
 									};
 									SplitCount = 2;
 								};
@@ -48,33 +55,33 @@
 									Frame = "{{0, 0}, {100, 50}}";
 								};
 								Tab1 = {
-									Frame = "{{0, 0}, {696, 72}}";
+									Frame = "{{0, 0}, {742, 72}}";
 								};
 								TabCount = 2;
 							};
-							Frame = "{{0, 0}, {696, 235}}";
+							Frame = "{{0, 0}, {742, 235}}";
 							LauncherConfigVersion = 4;
 						};
 						Tab1 = {
-							Frame = "{{0, 0}, {696, 208}}";
+							Frame = "{{0, 0}, {593, 208}}";
 							LauncherConfigVersion = 3;
 							Runner = {
-								Frame = "{{0, 0}, {696, 208}}";
+								Frame = "{{0, 0}, {593, 208}}";
 							};
 						};
 						Tab2 = {
-							BuildMessageFrame = "{{0, 0}, {698, 137}}";
-							BuildTranscriptFrame = "{{0, 146}, {698, 48}}";
-							Frame = "{{0, 0}, {696, 192}}";
+							BuildMessageFrame = "{{0, 0}, {671, 137}}";
+							BuildTranscriptFrame = "{{0, 146}, {671, 48}}";
+							Frame = "{{0, 0}, {669, 192}}";
 						};
 						Tab3 = {
-							Frame = "{{0, 0}, {696, 263}}";
+							Frame = "{{0, 0}, {669, 263}}";
 						};
 						TabCount = 4;
 					};
 					SplitCount = 1;
 					Tab0 = {
-						Frame = "{{0, 0}, {246, 606}}";
+						Frame = "{{0, 0}, {273, 606}}";
 					};
 					Tab1 = {
 						ClassesFrame = "{{0, 0}, {202, 56}}";
@@ -113,6 +120,18 @@
 			);
 		};
 	};
+	97746647030605850026ABAF = {
+		fileReference = 978ACEBD0305EE2C0031317E;
+		isa = PBXFileBreakpoint;
+		lineNumber = 81;
+		state = 1;
+	};
+	9774664803060A850026ABAF = {
+		fileReference = 978ACEBD0305EE2C0031317E;
+		isa = PBXFileBreakpoint;
+		lineNumber = 48;
+		state = 1;
+	};
 	9789E3C302F5B3FA008D7BCB = {
 		fileReference = 97DACB8302E3369A00951B37;
 		isa = PBXFileBreakpoint;
@@ -149,6 +168,50 @@
 		lineNumber = 150;
 		state = 1;
 	};
+	978ACEB80305EE060031317E = {
+		activeExec = 0;
+		customExecs = {
+		};
+		targetExecs = {
+			macosx = (
+				978ACEBF0305F38A0031317E,
+			);
+		};
+	};
+	978ACEBF0305F38A0031317E = {
+		activeArgIndex = 0;
+		argumentStrings = (
+			"\"jgdofifo\" /tmp/jgdofifo.in /tmp/jgdofifo.out",
+		);
+		debuggerPlugin = GDBDebugging;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		isa = PBXExecutable;
+		shlibInfoDictList = (
+		);
+		sourceDirectories = (
+		);
+	};
+	978ACEC30305FBF00031317E = {
+		fileReference = 978ACEBD0305EE2C0031317E;
+		isa = PBXFileBreakpoint;
+		lineNumber = 72;
+		state = 1;
+	};
+	978ACEC40305FC730031317E = {
+		fileReference = 978ACEBD0305EE2C0031317E;
+		isa = PBXFileBreakpoint;
+		lineNumber = 115;
+		state = 2;
+	};
+	978ACEC50306005A0031317E = {
+		fileReference = 978ACEBD0305EE2C0031317E;
+		isa = PBXFileBreakpoint;
+		lineNumber = 45;
+		state = 1;
+	};
 	97A4AE4102E361CD00951B37 = {
 		fileReference = 97DACB8102E3369A00951B37;
 		isa = PBXFileBreakpoint;
@@ -160,6 +223,79 @@
 		isa = PBXFileBreakpoint;
 		lineNumber = 74;
 		state = 2;
+	};
+	97C2B12803071CA600EA1B76 = {
+		activeExec = 0;
+		customExecs = {
+		};
+		targetExecs = {
+			macosx = (
+				97C2B12E03071CA600EA1B76,
+			);
+		};
+	};
+	97C2B12E03071CA600EA1B76 = {
+		activeArgIndex = 1;
+		argumentStrings = (
+			"\"stopwordserver\" /tmp/jgdoscript.sh \"STOPWORD\\n\"",
+			"\"bshserver\" ~/bin/bshstdio STOP",
+		);
+		debuggerPlugin = GDBDebugging;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		isa = PBXExecutable;
+		shlibInfoDictList = (
+		);
+		sourceDirectories = (
+		);
+	};
+	97C2B130030732EA00EA1B76 = {
+		fileReference = 97C2B12603071CA600EA1B76;
+		isa = PBXFileBreakpoint;
+		lineNumber = 93;
+		state = 1;
+	};
+	97C2B1320307C82600EA1B76 = {
+		activeExec = 0;
+		customExecs = {
+		};
+		targetExecs = {
+			macosx = (
+				97C2B1370307C82600EA1B76,
+			);
+		};
+	};
+	97C2B1370307C82600EA1B76 = {
+		activeArgIndex = 0;
+		argumentStrings = (
+			"a.XXX b.XXXX",
+			a,
+			"",
+			/tmp/a,
+		);
+		debuggerPlugin = GDBDebugging;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+			{
+				active = YES;
+				name = TMP;
+				value = /tmp;
+			},
+		);
+		isa = PBXExecutable;
+		shlibInfoDictList = (
+		);
+		sourceDirectories = (
+		);
+	};
+	97C2B13A0307D21C00EA1B76 = {
+		fileReference = 97C2B1380307C84800EA1B76;
+		isa = PBXFileBreakpoint;
+		lineNumber = 37;
+		state = 1;
 	};
 	97D073AA03041D0900951B37 = {
 		activeExec = 0;

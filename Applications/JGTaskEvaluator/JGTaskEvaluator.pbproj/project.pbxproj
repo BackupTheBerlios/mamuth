@@ -115,6 +115,9 @@
 			children = (
 				17587328FF379C6511CA2CBB,
 				97D073A603041D0900951B37,
+				978ACEB70305EE060031317E,
+				97C2B12703071CA600EA1B76,
+				97C2B1310307C82600EA1B76,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -141,11 +144,18 @@
 			targets = (
 				29B97326FDCFA39411CA2CEA,
 				97D073AA03041D0900951B37,
+				978ACEB80305EE060031317E,
+				97C2B12803071CA600EA1B76,
+				97C2B1320307C82600EA1B76,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
 			children = (
 				97DACB9002E3439A00951B37,
+				97C2B1410307F69E00EA1B76,
+				97C2B1250307101100EA1B76,
+				97C2B13D0307E08D00EA1B76,
+				97C2B13B0307D82D00EA1B76,
 				080E96DDFE201D6D7F000001,
 				29B97315FDCFA39411CA2CEA,
 				29B97317FDCFA39411CA2CEA,
@@ -159,8 +169,11 @@
 		};
 		29B97315FDCFA39411CA2CEA = {
 			children = (
-				97D073A703041D0900951B37,
 				29B97316FDCFA39411CA2CEA,
+				97D073A703041D0900951B37,
+				978ACEBD0305EE2C0031317E,
+				97C2B12603071CA600EA1B76,
+				97C2B1380307C84800EA1B76,
 			);
 			isa = PBXGroup;
 			name = "Other Sources";
@@ -385,6 +398,272 @@
 //972
 //973
 //974
+		978ACEB70305EE060031317E = {
+			isa = PBXExecutableFileReference;
+			path = jgdofifo;
+			refType = 3;
+		};
+		978ACEB80305EE060031317E = {
+			buildPhases = (
+				978ACEB90305EE060031317E,
+				978ACEBA0305EE060031317E,
+				978ACEBB0305EE060031317E,
+				978ACEBC0305EE060031317E,
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = jgdofifo;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+			);
+			isa = PBXToolTarget;
+			name = jgdofifo;
+			productInstallPath = /usr/local/bin;
+			productName = jgdofifo;
+			productReference = 978ACEB70305EE060031317E;
+			shouldUseHeadermap = 0;
+		};
+		978ACEB90305EE060031317E = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		978ACEBA0305EE060031317E = {
+			buildActionMask = 2147483647;
+			files = (
+				978ACEBE0305EE2C0031317E,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		978ACEBB0305EE060031317E = {
+			buildActionMask = 2147483647;
+			files = (
+				978ACEC00305F49C0031317E,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		978ACEBC0305EE060031317E = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		978ACEBD0305EE2C0031317E = {
+			isa = PBXFileReference;
+			path = jgdofifo_main.m;
+			refType = 4;
+		};
+		978ACEBE0305EE2C0031317E = {
+			fileRef = 978ACEBD0305EE2C0031317E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		978ACEC00305F49C0031317E = {
+			fileRef = 29B97325FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97C2B1250307101100EA1B76 = {
+			isa = PBXFileReference;
+			path = Description.txt;
+			refType = 4;
+		};
+		97C2B12603071CA600EA1B76 = {
+			isa = PBXFileReference;
+			path = jgdostdio_main.m;
+			refType = 4;
+		};
+		97C2B12703071CA600EA1B76 = {
+			isa = PBXExecutableFileReference;
+			path = jgdostdio;
+			refType = 3;
+		};
+		97C2B12803071CA600EA1B76 = {
+			buildPhases = (
+				97C2B12903071CA600EA1B76,
+				97C2B12A03071CA600EA1B76,
+				97C2B12C03071CA600EA1B76,
+				97C2B12D03071CA600EA1B76,
+			);
+			buildSettings = {
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = jgdostdio;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+			);
+			isa = PBXToolTarget;
+			name = jgdostdio;
+			productInstallPath = /usr/local/bin;
+			productName = jgdostdio;
+			productReference = 97C2B12703071CA600EA1B76;
+			shouldUseHeadermap = 0;
+		};
+		97C2B12903071CA600EA1B76 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		97C2B12A03071CA600EA1B76 = {
+			buildActionMask = 2147483647;
+			files = (
+				97C2B12B03071CA600EA1B76,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		97C2B12B03071CA600EA1B76 = {
+			fileRef = 97C2B12603071CA600EA1B76;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97C2B12C03071CA600EA1B76 = {
+			buildActionMask = 2147483647;
+			files = (
+				97C2B12F03072D1A00EA1B76,
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		97C2B12D03071CA600EA1B76 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		97C2B12F03072D1A00EA1B76 = {
+			fileRef = 29B97325FDCFA39411CA2CEA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97C2B1310307C82600EA1B76 = {
+			isa = PBXExecutableFileReference;
+			path = jgmktemp;
+			refType = 3;
+		};
+		97C2B1320307C82600EA1B76 = {
+			buildPhases = (
+				97C2B1330307C82600EA1B76,
+				97C2B1340307C82600EA1B76,
+				97C2B1350307C82600EA1B76,
+				97C2B1360307C82600EA1B76,
+			);
+			buildSettings = {
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = jgmktemp;
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+			);
+			isa = PBXToolTarget;
+			name = jgmktemp;
+			productInstallPath = /usr/local/bin;
+			productName = jgmktemp;
+			productReference = 97C2B1310307C82600EA1B76;
+			shouldUseHeadermap = 0;
+		};
+		97C2B1330307C82600EA1B76 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXHeadersBuildPhase;
+			name = Headers;
+		};
+		97C2B1340307C82600EA1B76 = {
+			buildActionMask = 2147483647;
+			files = (
+				97C2B1390307C84800EA1B76,
+			);
+			isa = PBXSourcesBuildPhase;
+			name = Sources;
+		};
+		97C2B1350307C82600EA1B76 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		97C2B1360307C82600EA1B76 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			name = "ResourceManager Resources";
+		};
+		97C2B1380307C84800EA1B76 = {
+			isa = PBXFileReference;
+			path = jgmktemp_main.c;
+			refType = 4;
+		};
+		97C2B1390307C84800EA1B76 = {
+			fileRef = 97C2B1380307C84800EA1B76;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		97C2B13B0307D82D00EA1B76 = {
+			children = (
+				97C2B13C0307D8E800EA1B76,
+				97C2B1400307F25100EA1B76,
+				97C2B1420307FBD900EA1B76,
+			);
+			isa = PBXGroup;
+			name = ShellScripts;
+			refType = 4;
+		};
+		97C2B13C0307D8E800EA1B76 = {
+			isa = PBXFileReference;
+			path = jgrunwithfifo.sh;
+			refType = 4;
+		};
+		97C2B13D0307E08D00EA1B76 = {
+			isa = PBXFileReference;
+			path = Install.txt;
+			refType = 4;
+		};
+		97C2B1400307F25100EA1B76 = {
+			isa = PBXFileReference;
+			path = bshstdio.sh;
+			refType = 4;
+		};
+		97C2B1410307F69E00EA1B76 = {
+			isa = PBXFileReference;
+			path = BeanShellExamples.txt;
+			refType = 4;
+		};
+		97C2B1420307FBD900EA1B76 = {
+			isa = PBXFileReference;
+			path = jgdoscript.sh;
+			refType = 4;
+		};
 		97D073A603041D0900951B37 = {
 			isa = PBXExecutableFileReference;
 			path = jgdo;
@@ -413,7 +692,6 @@
 				97D073B103041D0900951B37,
 			);
 			buildSettings = {
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";

@@ -33,13 +33,16 @@ Set-Blocks get an Object as an additional parameter.
   NSTableView *tableView; // outlet
   NSArray *model;
   NSDictionary *mappings;
+  NSArray *identifiers;
 }
 + (NSMutableArray *)arrayOfDictionariesForKeys:(NSArray *)keys valueArrays:(NSArray *)valueArrays;
 + (NSDictionary *)mappingsForIdentifiers:(NSArray *)identifiers titles:(NSArray *)titles getBlocks:(NSArray *)getBlocks setBlocks:(NSArray *)setBlocks;
 + (JGArrayTableView *)arrayTableViewWithArray:(NSArray*)modelArray identifiers:(NSArray *)identifiers  titles:(NSArray *)titles getBlocks:(NSArray *)getBlocks setBlocks:(NSArray *)setBlocks;
 + (JGArrayTableView *)arrayTableViewWithArray:(NSArray*)modelArray identifiers:(NSArray *)identifiers mappings:(NSDictionary *)mappings;
 
-- (JGArrayTableView *)initWithArray:(NSArray*)modelArray identifiers:(NSArray *)identifiers mappings:(NSDictionary *)mappings;
+- (void)setArray:(NSArray*)modelArray identifiers:(NSArray *)theIdentifiers mappings:(NSDictionary *)mappingsValue;
+- (void)setupTableViewAsWindowDelegate:(BOOL)isWindowDelegate;
+- (NSTableView *)tableView;
 @end
 
 #ifdef USE_SD_TABLE_VIEW

@@ -48,7 +48,7 @@ NSString *SetBlockString=@"setBlock";
   return a;
 }
 
-+ (NSDictionary *)mappingsForIdentifiers:(NSArray *)identifiers titles:(NSArray *)titles getBlocks:(NSArray *)getBlocks setBlocks:(NSArray *)setBlocks;
++ (NSDictionary *)mappingsForIdentifiers:(NSArray *)theIdentifiers titles:(NSArray *)titles getBlocks:(NSArray *)getBlocks setBlocks:(NSArray *)setBlocks;
 {
   NSMutableArray *valueArrays=[NSMutableArray array];
   NSMutableArray *keyArray=[NSMutableArray array];
@@ -66,70 +66,102 @@ NSString *SetBlockString=@"setBlock";
       [valueArrays addObject:setBlocks];
   }  
   values=[self arrayOfDictionariesForKeys:keyArray valueArrays:valueArrays];
-  if([identifiers count]==[values count])
-    return [NSDictionary dictionaryWithObjects:values forKeys:identifiers];
+  if([theIdentifiers count]==[values count])
+    return [NSDictionary dictionaryWithObjects:values forKeys:theIdentifiers];
   else
     return nil;
 }
 
-+ (JGArrayTableView *)arrayTableViewWithArray:(NSArray*)modelArray identifiers:(NSArray *)identifiers  titles:(NSArray *)titles getBlocks:(NSArray *)getBlocks setBlocks:(NSArray *)setBlocks;
++ (JGArrayTableView *)arrayTableViewWithArray:(NSArray*)modelArray identifiers:(NSArray *)theIdentifiers  titles:(NSArray *)titles getBlocks:(NSArray *)getBlocks setBlocks:(NSArray *)setBlocks;
 {
-  id mappingsValue=[self mappingsForIdentifiers:identifiers titles:titles getBlocks:getBlocks setBlocks:setBlocks];
+  id mappingsValue=[self mappingsForIdentifiers:theIdentifiers titles:titles getBlocks:getBlocks setBlocks:setBlocks];
   if (mappingsValue)
-    return [self arrayTableViewWithArray:modelArray identifiers:identifiers mappings:mappingsValue];
+    return [self arrayTableViewWithArray:modelArray identifiers:theIdentifiers mappings:mappingsValue];
   else
     return nil;
 }
 
-+ (JGArrayTableView *)arrayTableViewWithArray:(NSArray*)modelArray identifiers:(NSArray *)identifiers mappings:(NSDictionary *)mappingsValue;
++ (JGArrayTableView *)arrayTableViewWithArray:(NSArray*)modelArray identifiers:(NSArray *)theIdentifiers mappings:(NSDictionary *)mappingsValue;
 {
-  return [[[self alloc] initWithArray:modelArray identifiers:identifiers mappings:mappingsValue] autorelease];
+  JGArrayTableView *inst= [[self alloc] init];
+  [inst setArray:modelArray identifiers:theIdentifiers mappings:mappingsValue];
+
+  [NSBundle loadNibNamed:@"ArrayTableView.nib" owner:inst];
+  [inst setupTableViewAsWindowDelegate:YES];
+  return [inst autorelease];
+}
+
+- (JGArrayTableView *)init;
+{
+  if (self = [super init])
+  {
+    model = [[NSArray alloc] init];
+    identifiers=[[NSArray alloc] init];
+    mappings=nil;
+    return self;
+  }
+  return nil;
 }
 
 -(void)dealloc
 {
-  NSLog(@"JGArrayTableView dealloc");
+  //  NSLog(@"JGArrayTableView dealloc");
   [model release];
+  [identifiers release];
+  [mappings release];
   [super dealloc];
 }
 
-- (JGArrayTableView *)initWithArray:(NSArray*)modelArray identifiers:(NSArray *)identifiers mappings:(NSDictionary *)mappingsValue;
+
+- (void)setArray:(NSArray*)modelArray identifiers:(NSArray *)theIdentifiers mappings:(NSDictionary *)mappingsValue;
+{
+  [modelArray retain];
+  [theIdentifiers retain];
+  [mappingsValue retain];
+  [model release];
+  [identifiers release];
+  [mappings release];
+  model = modelArray;
+  identifiers=theIdentifiers;  
+  mappings=mappingsValue;
+  if (tableView)
+    [self setupTableViewAsWindowDelegate:NO];
+}
+
+- (void)setupTableViewAsWindowDelegate:(BOOL)isWindowDelegate;
 {
   int i, nb;
 
-  if (self = [super init])
-  {
-    model = [modelArray retain];
-    mappings=[mappingsValue retain];
-    
+  if (isWindowDelegate) {
     [self retain]; // we must stay alive while our window exist cause we are its delegate (and delegate produces a weak reference).
 
-    [NSBundle loadNibNamed:@"ArrayTableView.nib" owner:self];
-  
     [[tableView window] setMenu:nil];
-    [[tableView window] setDelegate:self];
-
-    while([[tableView tableColumns] count] > 0)
-      [tableView removeTableColumn:[[tableView tableColumns] objectAtIndex:0]];
-  
-    for (i = 0, nb = [identifiers count]; i < nb; i++) { 
-      id identifier=[identifiers objectAtIndex:i];
-      NSDictionary *mapping=[mappings objectForKey:identifier];
-      Block *getBlock=[mapping objectForKey:GetBlockString];
-      Block *setBlock=[mapping objectForKey:SetBlockString];
-      NSString *title=[mapping objectForKey:TitleString];
-      if (getBlock) {
-        NSTableColumn *column = [[[NSTableColumn alloc] initWithIdentifier:identifier] autorelease];
-        [[column headerCell] setStringValue:
-          (title? title: [getBlock printString]) ];
-        [column setEditable:(setBlock!=nil)];
-        [tableView addTableColumn:column];
-      }
-    }
-    [tableView tile];
-    return self;
+    [[tableView window] setDelegate:self];    
   }
-  return nil;
+
+  while([[tableView tableColumns] count] > 0)
+    [tableView removeTableColumn:[[tableView tableColumns] objectAtIndex:0]];
+
+  for (i = 0, nb = [identifiers count]; i < nb; i++) { 
+    id identifier=[identifiers objectAtIndex:i];
+    NSDictionary *mapping=[mappings objectForKey:identifier];
+    Block *getBlock=[mapping objectForKey:GetBlockString];
+    Block *setBlock=[mapping objectForKey:SetBlockString];
+    NSString *title=[mapping objectForKey:TitleString];
+    if (getBlock) {
+      NSTableColumn *column = [[[NSTableColumn alloc] initWithIdentifier:identifier] autorelease];
+      [[column headerCell] setStringValue:
+        (title? title: [getBlock printString]) ];
+      [column setEditable:(setBlock!=nil)];
+      [tableView addTableColumn:column];
+    }
+  }
+  [tableView tile];  
+}
+
+- (NSTableView *)tableView;
+{
+  return tableView;
 }
 
 //////////////////// NSTableView callbacks
@@ -172,6 +204,7 @@ NSString *SetBlockString=@"setBlock";
 
 - (void)windowWillClose:(NSNotification *)aNotification
 {
+  // is not called, if it is not the delegate. see -setupTableViewAsWindowDelegate:
   [self autorelease];
 } 
 

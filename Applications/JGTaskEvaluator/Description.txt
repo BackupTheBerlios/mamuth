@@ -2,10 +2,37 @@ JGTaskEvaluator is an Application, that has three communication channels: Servic
 
 jgdo is a unix program, that sends its standard input(s) to a named method of a named DO-server, and returns the result(s) to its standard output.
 So jgdo is useful as a target of JGTaskEvaluator, because this way Classic Mac programs can communicate per Apple-Events with Cocoa programs, that do not support apple events, but do support DO.
+USAGE: jgdo [DO-Server-Name [Serve-Method [Slice-Method [Direct-Parameter]]]]
 
 jgdofifo is a unix program, that sets up a named DO-server (method "execute:"), puts each request string to a named first-in-first-out (FIFO) file (closes the stream) and polls another FIFO file until end of file, which must be indicated by another program, which reads from the first file and writes to the second.
 So jgdofifo is useful as a target of jgdo, because this way programs, that do not support any of the above communication channels, can be integrated into the communication architecture.
+USAGE: jgdofifo serverName fifoInputName fifoOutputName
 
 jgdostdio is like jgdofifo a unix program, that sets up a named DO-server (method "execute:"), but instead of communicating with an independent task, it starts the task and controls its input and output. And opposed to JGTaskEvaluator, it does not wait until the task terminates, but until a stopword occurs on its stdout stream. The return value is the output without the stopword. It is the responsibility of the caller, that each request produces exactly one stopword and no output is produced after the stopword. The latter would lead to litter in the next request. The same is true, if the task is interactive and produces for some reasons output on stdout. If You want to be more safe, send a cleanup request, that just collects all current output data.
 jgdostdio is a replacement for jgdofifo for simple stdio based server tasks.
+USAGE: jgdostdio serverName executablePath stopName [-n]
+
+jgmktemp is a unix program wrapper for the mktemp() c function, which suggests not yet existing temporary file names.The program produces for each argument a mktemp(), adding .XXXXXX if argument does not end in X.
+If no argument is given, it uses $MKTEMP_DIR/mktemp.XXXXXX or $TMP/mktemp.XXXXXX as a template.
+USAGE: jgmktemp [template1 [template2 ...]]
+
+jgae is a unix program, that sends Apple-Events to another Application with a specified Creator-Name, Class-Name and Id-Name. The signature of the Event must be String-In and String-Out. The number of events send depends on the Slice-Method choosen. (See jgdo). Input is taken from Direct-Parameter or from standard-in. Output is written to standard-out.
+USAGE: jgae [Creator-Name [Class-Name [Id-Name [Slice-Method [Direct-Parameter]]]]]
+
+Special Configurations
+======================
+
+jgdoscript.sh is a shell script, that wraps jgdostdio in such a way, that it reads the stdin, writes it as a script to a temporary fifo file, executes jgdostdio with <stopName> and the temporary file name both as the server-name and the executable-path-name. It returns the server name. This way the script gets its input from jgdostdio when requests come in.
+USAGE: jgdoscript stopName [-n]
+
+jgrunwithfifo.sh is a script that allows to pipe stdin to a command, that only accepts input from a file. Works for commands that do read from start till end-of-file only once.
+USAGE: jgrunwithfifo command [fifofilename [arg2 ... ]]
+
+Special application targets
+===========================
+jgom is a specialization of jgae for the case of communication with OpenMusic.
+USAGE: jgom [Slice-Method [Direct-Parameter]]
+
+bshstdio.sh is an example of using jgrunwithfifo. It assumes, that there is a bsh (beanshell) interpreter installed, that takes a bsh-scriptfile as an argument. 
+USAGE: bshstdio (Without args)
 

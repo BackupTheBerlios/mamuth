@@ -130,4 +130,11 @@ ps -ax | grep jgdo | grep -v grep | gawk 'BEGIN {FS=" "}{system("kill "$1)}'
 ./jgae "CCL2" "misc" "eval" direct "(list 'a 'b)"
 ./jgom direct "(list 'a 'b)"
 
+# The following code produces answers first for 'a then for 'b. 
+# This means OM can not serve multiple simultanious requests.
+./jgom direct "(progn (sleep 10) 'a)" &
+sleep 2
+./jgom direct "'b"
+
+
 

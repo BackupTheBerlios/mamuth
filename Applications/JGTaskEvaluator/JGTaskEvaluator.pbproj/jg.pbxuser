@@ -2,7 +2,7 @@
 {
 	29B97313FDCFA39411CA2CEA = {
 		activeBuildStyle = 4A9504CCFFE6A4B311CA0CBA;
-		activeTarget = 97666697030A76C100818A17;
+		activeTarget = 978ACEB80305EE060031317E;
 		addToTargets = (
 			9766669F030AE19900818A17,
 		);
@@ -44,10 +44,10 @@
 								Split0 = {
 									Frame = "{{0, 96}, {742, 139}}";
 									Split0 = {
-										Frame = "{{0, 0}, {357, 139}}";
+										Frame = "{{0, 0}, {356, 139}}";
 									};
 									Split1 = {
-										Frame = "{{366, 0}, {376, 139}}";
+										Frame = "{{365, 0}, {377, 139}}";
 									};
 									SplitCount = 2;
 								};
@@ -64,10 +64,10 @@
 							LauncherConfigVersion = 4;
 						};
 						Tab1 = {
-							Frame = "{{0, 0}, {593, 208}}";
+							Frame = "{{0, 0}, {669, 208}}";
 							LauncherConfigVersion = 3;
 							Runner = {
-								Frame = "{{0, 0}, {593, 208}}";
+								Frame = "{{0, 0}, {669, 208}}";
 							};
 						};
 						Tab2 = {

@@ -4,7 +4,6 @@
 #import "FSLisp2PropertyList.h"
 #include "sexp.h"
 
-
 @implementation FSLisp2PropertyList
 + (id)globalConverter;
 {
@@ -57,21 +56,25 @@
   sexp_t *next;
   BOOL isMacroDef=NO;
 
-  NSString *key=nil;
+  NSNumber *key=nil;
   if (sx) 
     next=sx->next;
   while (sx) {
     if (sx->ty==SEXP_VALUE) {
       char *str=sx->val;
       if (decodeCyclicMacro && (sx->aty==SEXP_BASIC) && (str[0]=='#')) {
-        int len=strlen(str);
+        int macroEnd; // marks the position of the macro end character (the first one after the number), e.g. '=', '#' or 'a'.
         if (key) {
           fprintf(stderr,"Wrong Macro after Macro.\n");
           return nil;
         }
-        if (len>=3) {
-          key=[NSString stringWithCString:str+1 length:len-2]; // from #1= skip first # and last =
-          switch (str[len-1]) {
+        macroEnd=1;
+        while ((str[macroEnd]!=0) && (str[macroEnd]>='0') && (str[macroEnd]<='9'))
+          macroEnd++;
+        // skip rest of macro e.g. if #1=#3a  (where #3a is an array reader macro)
+        if (str[macroEnd]) {
+          key=[NSNumber numberWithInt:[[NSString stringWithCString:str+1 length:macroEnd-1] intValue]]; // from #1= skip first # and last =
+          switch (str[macroEnd]) {
             case '=': isMacroDef=YES; break; 
             case '#': item=[cyclicStructs objectForKey:key];
               if (!item) {
@@ -79,6 +82,7 @@
                 return nil;
               }
               key=nil; break;
+            case 'a': item=nil; key=nil; break; // skip #na array macro
             default: fprintf(stderr,"Wrong Macro does not end in '#' or '=': %s.\n",str); return nil;
           }
         } else {
@@ -96,10 +100,12 @@
     }
     if (decodeCyclicMacro) {
       if (!isMacroDef) {
-        [a addObject:item];
-        if (key) {
-          [cyclicStructs setObject:item forKey:key];
-          key=nil;
+        if (item) { // skip if #na
+          [a addObject:item];
+          if (key) {
+            [cyclicStructs setObject:item forKey:key];
+            key=nil;
+          }
         }
       } else {
         isMacroDef=NO;        
@@ -160,3 +166,4 @@
 }
 */
 @end
+

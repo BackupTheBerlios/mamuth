@@ -1,4 +1,4 @@
-/* ArrayTableView.m Copyright (c) 1998-2001 Philippe Mougin.  */
+/* ArrayTableView.m Copyright (c) 1998-2001 Philippe Mougin. Joerg Garbers  */
 /*   This software is open source. See the license.  */  
 
 #import "build_config.h"

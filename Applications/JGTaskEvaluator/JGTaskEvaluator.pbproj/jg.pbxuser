@@ -2,9 +2,9 @@
 {
 	29B97313FDCFA39411CA2CEA = {
 		activeBuildStyle = 4A9504CCFFE6A4B311CA0CBA;
-		activeTarget = 29B97326FDCFA39411CA2CEA;
+		activeTarget = 97D073AA03041D0900951B37;
 		addToTargets = (
-			29B97326FDCFA39411CA2CEA,
+			97D073AA03041D0900951B37,
 		);
 		breakpoints = (
 			97A4AE4102E361CD00951B37,
@@ -23,10 +23,10 @@
 					ActiveTab = 0;
 					Frame = "{{0, 23}, {966, 606}}";
 					Split0 = {
-						ActiveTab = 2;
+						ActiveTab = 1;
 						Frame = "{{270, 0}, {696, 606}}";
 						Split0 = {
-							Frame = "{{0, 216}, {696, 390}}";
+							Frame = "{{0, 232}, {696, 374}}";
 						};
 						SplitCount = 1;
 						Tab0 = {
@@ -86,12 +86,12 @@
 						Frame = "{{0, 0}, {200, 100}}";
 					};
 					Tab3 = {
-						Frame = "{{0, 0}, {200, 499}}";
+						Frame = "{{0, 0}, {200, 606}}";
 						Split0 = {
-							Frame = "{{0, 0}, {200, 241}}";
+							Frame = "{{0, 0}, {200, 293}}";
 						};
 						Split1 = {
-							Frame = "{{0, 250}, {200, 249}}";
+							Frame = "{{0, 302}, {200, 304}}";
 						};
 						SplitCount = 2;
 					};
@@ -160,6 +160,32 @@
 		isa = PBXFileBreakpoint;
 		lineNumber = 74;
 		state = 2;
+	};
+	97D073AA03041D0900951B37 = {
+		activeExec = 0;
+		customExecs = {
+		};
+		targetExecs = {
+			macosx = (
+				97D073B203041D3B00951B37,
+			);
+		};
+	};
+	97D073B203041D3B00951B37 = {
+		activeArgIndex = 0;
+		argumentStrings = (
+			"F-Script execute direct \"3+4\"",
+		);
+		debuggerPlugin = GDBDebugging;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		isa = PBXExecutable;
+		shlibInfoDictList = (
+		);
+		sourceDirectories = (
+		);
 	};
 	97DACB7F02E3366400951B37 = {
 		activeArgIndex = 2147483647;

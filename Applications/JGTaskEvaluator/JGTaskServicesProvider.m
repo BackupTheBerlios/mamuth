@@ -43,7 +43,7 @@ static id globalServicesProvider;
 - (void)registerExports;
 {
   [self registerServicesProvider];
-//  [self registerServerConnection:@"JGTaskEvaluator"];
+  [self registerServerConnection:@"JGTaskEvaluator"];
 }
 - (void)registerServerConnection:(NSString *)connectionName;
 {

@@ -9,6 +9,7 @@ enum plist_type {ERROR=0,TEMP,STRING,ARRAY,DICTIONARY,DATA} ;
 + (void)setDefines;
 - (void)appendItem:(NSString *)str;
 - (void)let:(enum plist_type)type address:(NSValue *)address definition:(NSString *)definition prePrefix:(NSString *)prePrefix;
+- (enum plist_type)typeOfObject:(id)obj;
 @end
 
 @implementation FSPropertyList2Lisp
@@ -21,6 +22,14 @@ static id lispDef_hashTableSetKeyValuesRec,lispDef_hashTableSetKeyValues,lispDef
 
 static id lispPrintCircle;
 static BOOL useLocalFunctions=YES;
+
+static NSString *globalNewLine=nil;
++ (void)setNewLine:(NSString *)newStr;
+{
+  id n=[newStr copy];
+  [globalNewLine release];
+  globalNewLine=n;
+}
 
 + (void)initializeLispStrings;
 {
@@ -111,6 +120,7 @@ static BOOL useLocalFunctions=YES;
   for (i=0;i<=DATA; i++) {
     varNumber[i]=0;
     duplicates[i]=[[NSMutableSet alloc] init];
+    objectCount[i]=0;
   }
   varPrefix[STRING]=@"s";
   varPrefix[ARRAY]=@"a";
@@ -126,8 +136,28 @@ static BOOL useLocalFunctions=YES;
   needDictDef=needArrayDef=0;
   defineCycles=NO; // set YES, when declared vars must be defined (in case of cyclic objects)
   vectorString=[@"list" retain];
+  if (globalNewLine)
+    newLine=[globalNewLine copy];
   return self;
 }
+
+- (void)dealloc;
+{
+  int i;
+  [addresses release];
+  for (i=0; i<FSPROPERTYLIST_MAXPLISTTYPE; i++) {
+    [duplicates[i] release];
+    [varPrefix[i] release];
+  }
+  [begunAddresses release];
+  [cycleAddresses release];
+  [names release];
+  [letDefs release];
+  [vectorString release];
+  [newLine release];
+  [super dealloc];
+}
+
 - (void)setVectorString:(NSString *)newStr;
 {
   id n=[newStr copy];
@@ -137,6 +167,18 @@ static BOOL useLocalFunctions=YES;
 - (NSString *)vectorString;
 {
   return vectorString;
+}
+
+
+- (void)setNewLine:(NSString *)newStr;
+{
+  id n=[newStr copy];
+  [newLine release];
+  newLine=n;
+}
+- (NSString *)newLine;
+{
+  return newLine;
 }
 
 - (void)setDefineCylce:(BOOL)yn;
@@ -170,6 +212,7 @@ static BOOL useLocalFunctions=YES;
       [cycleAddresses addObject:address];
     return;
   }
+  objectCount[type]++;
   [addresses addObject:address];
   switch (type) {
     case ARRAY:
@@ -415,3 +458,91 @@ static BOOL useLocalFunctions=YES;
 }
 */
 @end
+
+@implementation FSPropertyList2Lisp (NestedListData)
+- (void)addToString:(NSMutableString *)lispString lispStringForString:(NSString *)str;
+{
+  const char *cStr=[str cString];
+  while (*cStr) {
+    switch (*cStr) {
+      case '\"': [lispString appendString:@"\\\""]; break;
+      case '\n': [lispString appendString:newLine]; break;
+      default: [lispString appendFormat:@"%c",*cStr];
+    }
+    cStr++;
+  }
+}
+
+- (void)addToMacroString:(NSMutableString *)lispString fromArrayOrString:(id)plist level:(int)level;
+{
+  NSValue *key=[NSValue valueWithPointer:(void *)plist];
+  enum plist_type t=[self typeOfObject:plist];
+  if ([duplicates[t] containsObject:key]) {
+    NSString *name=[names objectForKey:key];
+    if (name) {
+      [lispString appendString:name];
+      return;
+    }
+    varNumber[0]++;
+    [names setObject:[NSString stringWithFormat:@"#%d#",varNumber[0]] forKey:key];
+    [lispString appendFormat:@"#%d=",varNumber[0]];
+    level+=2;
+  }
+  if (t==STRING) {
+    [lispString appendString:@"\""];
+    [self addToString:lispString lispStringForString:plist];
+    [lispString appendString:@"\""];
+  } else if (t==ARRAY) {
+    int c=[plist count];
+    int idx;
+    NSString *indentString;
+    if (level>=0) {
+      int i;
+      NSMutableString *mStr=[NSMutableString string];
+      [mStr appendString:newLine];
+      for (i=0;i<=level;i++) {
+        [mStr appendString:@"  "];
+      }
+      indentString=mStr;
+    } else {
+      indentString=@" ";
+    }
+    [lispString appendString:@"( "];
+    for (idx=0;idx<c;idx++) {
+      if (idx) {
+        [lispString appendString:indentString];
+      } // idx
+      [self addToMacroString:lispString fromArrayOrString:[plist objectAtIndex:idx] level:level+1];
+    }
+    [lispString appendString:@")"];
+  } else {
+    [lispString appendString:@"unknown-list-type"];
+  }
+}
+- (NSMutableString *)macroStringForArrays:(id) plist;
+{
+  NSMutableString *lispString=[NSMutableString string];
+  if (objectCount[DICTIONARY] || objectCount[DATA])
+    return [@"contains-dictionary-or-data" mutableCopy];
+  [self addToMacroString:lispString fromArrayOrString:plist level:0];
+  return lispString;
+}
+
+static BOOL macroStringForArraysUsesReferences=YES;
++ (BOOL)macroStringForArraysUsesReferences;
+{
+  return macroStringForArraysUsesReferences;
+}
++ (void)setMacroStringForArraysUsesReferences:(BOOL)newVal;
+{
+  macroStringForArraysUsesReferences=newVal;
+}
++ (NSMutableString *)macroStringForArrays:(id) plist;
+{
+  FSPropertyList2Lisp *inst=[[[[self class] alloc] init] autorelease];
+  if (macroStringForArraysUsesReferences)
+    [inst checkRefs:plist];
+  return [inst macroStringForArrays:plist];
+}
+@end
+

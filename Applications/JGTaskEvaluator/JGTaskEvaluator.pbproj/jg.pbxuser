@@ -2,7 +2,7 @@
 {
 	29B97313FDCFA39411CA2CEA = {
 		activeBuildStyle = 4A9504CCFFE6A4B311CA0CBA;
-		activeTarget = 9766669F030AE19900818A17;
+		activeTarget = 97666697030A76C100818A17;
 		addToTargets = (
 			9766669F030AE19900818A17,
 		);
@@ -137,8 +137,9 @@
 		};
 	};
 	976666A4030AE1E000818A17 = {
-		activeArgIndex = 2147483647;
+		activeArgIndex = 0;
 		argumentStrings = (
+			"\"CCL2\" \"misc\" \"eval\" direct \"(list 'a 'b)\"",
 		);
 		debuggerPlugin = GDBDebugging;
 		dylibVariantSuffix = "";
@@ -154,8 +155,32 @@
 	976666AB030AEBCE00818A17 = {
 		fileReference = 9766669D030AE16B00818A17;
 		isa = PBXFileBreakpoint;
-		lineNumber = 67;
-		state = 1;
+		lineNumber = 61;
+		state = 2;
+	};
+	976666B8030D726F00818A17 = {
+		activeExec = 0;
+		customExecs = {
+		};
+		targetExecs = {
+			macosx = (
+				976666C1030D765B00818A17,
+			);
+		};
+	};
+	976666C1030D765B00818A17 = {
+		activeArgIndex = 2147483647;
+		argumentStrings = (
+		);
+		debuggerPlugin = GDBDebugging;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		isa = PBXExecutable;
+		shlibInfoDictList = (
+		);
+		sourceDirectories = (
+		);
 	};
 	97746647030605850026ABAF = {
 		fileReference = 978ACEBD0305EE2C0031317E;

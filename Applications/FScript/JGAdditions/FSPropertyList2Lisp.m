@@ -62,13 +62,19 @@ static BOOL useLocalFunctions=YES;
   lispPrintCircle=[@"(setf *print-circle* t)" retain];
 }
 
-+ (NSString *)stringFromPropertyList:(id)plist;
++ (NSString *)stringFromPropertyList:(id)plist vectorString:(NSString *)v;
 {
-  FSPropertyList2Lisp *inst=[[[self class] alloc] init];
-  [[self class] initializeLispStrings];
+  FSPropertyList2Lisp *inst=[[[[self class] alloc] init] autorelease];
+  [inst setVectorString:v];
   [inst checkRefs:plist];
   return [inst stringFromPropertyList:plist];
 }
+
++ (NSString *)stringFromPropertyList:(id)plist;
+{
+  return [self stringFromPropertyList:plist vectorString:@"list"];
+}
+
 
 - (NSString *)stringFromPropertyList:(id)plist;
 {  
@@ -99,6 +105,7 @@ static BOOL useLocalFunctions=YES;
 {
   int i;
   [super init];
+  [[self class] initializeLispStrings];
   //checkRefs variables
   addresses=[[NSMutableSet alloc] init];
   for (i=0;i<=DATA; i++) {
@@ -120,6 +127,16 @@ static BOOL useLocalFunctions=YES;
   defineCycles=NO; // set YES, when declared vars must be defined (in case of cyclic objects)
   vectorString=[@"list" retain];
   return self;
+}
+- (void)setVectorString:(NSString *)newStr;
+{
+  id n=[newStr copy];
+  [vectorString release];
+  vectorString=n;
+}
+- (NSString *)vectorString;
+{
+  return vectorString;
 }
 
 - (void)setDefineCylce:(BOOL)yn;
@@ -297,7 +314,10 @@ static BOOL useLocalFunctions=YES;
     // the usual case
     if (vectorString==lisp_arrayWithElements) 
       needArrayDef=3;
-    return [NSString stringWithFormat:@"(%@ %@)",vectorString,componentsString];
+    if (vectorString)
+      return [NSString stringWithFormat:@"(%@ %@)",vectorString,componentsString];
+    else
+      return [NSString stringWithFormat:@"(%@)",componentsString];
   } else {
     NSString *name=[names objectForKey:address];
     if (needArrayDef<2)

@@ -14,13 +14,16 @@
   NSMutableString *letDefs;
   BOOL defineCycles;
   int needDictDef,needArrayDef;
-  NSString *vectorString;
+  NSString *vectorString; // if nil, use value form.
 }
 + (void)initializeLispStrings;
 + (NSString *)lisp_defines;
 + (NSString *)stringFromPropertyList:(id)plist;
++ (NSString *)stringFromPropertyList:(id)plist vectorString:(NSString *)v;
 + (void)setUseLocalFunctions:(BOOL)yn;
 - init;
+- (void)setVectorString:(NSString *)newStr;
+- (NSString *)vectorString;
 - (NSString *)stringFromPropertyList:(id)plist;
 - (NSString *)dataExpressionForPlist:(id)plist;
 - (void)setDefineCylce:(BOOL)yn;

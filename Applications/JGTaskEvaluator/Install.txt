@@ -1,9 +1,19 @@
 DEST=~
+rm -r $DEST/Applications/JGTaskEvaluator.app
+
+SHORTDATE=`date "+%y%m%d"`
+DIRNAME="JGTaskEvaluator20$SHORTDATE"
+DEST=/tmp/$DIRNAME
+mkdir $DEST
+mkdir $DEST/bin
+mkdir $DEST/Applications
+
 cp build/jg* $DEST/bin
 cp jgrunwithfifo.sh $DEST/bin/jgrunwithfifo
 cp bshstdio.sh $DEST/bin/bshstdio
 cp jgdoscript.sh $DEST/bin/jgdoscript
 chmod u+x $DEST/bin/jgrunwithfifo $DEST/bin/bshstdio $DEST/bin/jgdoscript
-rm -r $DEST/Applications/JGTaskEvaluator.app
 cp -r build/JGTaskEvaluator.app $DEST/Applications
 
+cd /tmp
+gnutar -zcf $DIRNAME.tgz $DIRNAME
